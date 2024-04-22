@@ -32,7 +32,6 @@
     </style>
 </head>
 
-
 <body>
     <div class="login">
 
@@ -50,9 +49,7 @@
 
     </div>
 </body>
-
 <script>
-
 
     async function loginRequest() {
         const username = document.getElementById('username').value;
@@ -68,21 +65,21 @@
             method: "POST",
             body: JSON.stringify(resData),
             headers: {
-                'Content-Type': 'application/json' 
+                'Content-Type': 'application/json'
             }
         });
         const result = await data.json();
         if (result?.username) {
             localStorage.setItem("user", JSON.stringify(result));
+            window.location.replace("/");
         }
     }
 
     const formId = document.getElementById("form-id");
-
     formId.addEventListener("submit", function (event) {
         event.preventDefault();
     });
-    
+
 </script>
 
 </html>
