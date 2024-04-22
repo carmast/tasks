@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .login {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        input {
+            width: 100%;
+            height: 100%;
+
+        }
+    </style>
+</head>
+
+
+<body>
+    <div class="login">
+
+        <form id="form-id">
+            <label for="username">Username</label>
+            <input id="username" name="username" type="username" />
+
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" />
+
+            <button type="submit" onclick="loginRequest()">Login</button>
+        </form>
+
+
+
+    </div>
+</body>
+
+<script>
+
+
+    async function loginRequest() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        // Create the request data
+        let resData = {
+            username: username,
+            password: password
+        };
+
+        const data = await fetch("/login", {
+            method: "POST",
+            body: JSON.stringify(resData),
+            headers: {
+                'Content-Type': 'application/json' 
+            }
+        });
+        const result = await data.json();
+        if (result?.username) {
+            localStorage.setItem("user", JSON.stringify(result));
+        }
+    }
+
+    const formId = document.getElementById("form-id");
+
+    formId.addEventListener("submit", function (event) {
+        event.preventDefault();
+    });
+    
+</script>
+
+</html>
