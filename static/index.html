@@ -1,36 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
- <style>
+    <style>
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
-    body,html{
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        }
 
-    }
-
- </style>
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    </style>
 
 </head>
+
 <body>
- <div class="main-container">
-    Main Page
- </div>
+    <div class="main-container">
+        Main Page
+
+        <form id="uploadForm">
+            <input type="file" id="fileInput" multiple />
+            <button type="button" id="previewButton">Preview Files</button>
+            <button type="submit">Upload</button>
+        </form>
+
+        <div id="fileListContainer">
+            <h3>Selected Files:</h3>
+            <ul id="fileList"></ul>
+        </div>
+    </div>
 </body>
- <script>
-     const user = localStorage.getItem("user");
-     const userParse = JSON.parse(user);
-     if(!userParse.accessToken){
-         window.location.replace('/login');
-     }
+<script>
+    const user = localStorage.getItem("user");
+    const userParse = JSON.parse(user);
+    if (!userParse?.accessToken) {
+        window.location.replace('/login');
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const fileInput = document.getElementById("fileInput");
+        const fileList = document.getElementById("fileList");
+        const previewButton = document.getElementById("previewButton");
+        const uploadForm = document.getElementById("uploadForm");
+
+        fileInput.addEventListener("change", function (event) {
+            fileList.innerHTML = ""; // Clear previous list
+
+            // Display selected files
+            Array.from(fileInput.files).forEach(file => {
+                const listItem = document.createElement("li");
+                listItem.textContent = file.name;
+                fileList.appendChild(listItem);
+            });
+        });
+
+        previewButton.addEventListener("click", function (event) {
+            event.preventDefault();
+            fileList.innerHTML = ""; // Clear previous list
+
+            // Display selected files
+            Array.from(fileInput.files).forEach(file => {
+                const listItem = document.createElement("li");
+                listItem.textContent = file.name;
+                fileList.appendChild(listItem);
+            });
+        });
+
+        uploadForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const formData = new FormData(); // Create FormData object
+
+            // Add selected files to the FormData object
+            Array.from(fileInput.files).forEach(file => {
+                formData.append('files', file);
+            });
+
+            // Fetch request to upload files
+            fetch('/upload', {
+                method: 'POST',
+                body: formData // Set FormData object as request body
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw new Error('Network response was not ok.');
+                })
+                .then(data => {
+                    console.log('Files uploaded successfully:', data);
+                    // Optionally, perform actions after successful upload
+                })
+                .catch(error => {
+                    console.error('Error uploading files:', error);
+                    // Optionally, handle errors
+                });
+
+        });
+    });
 
 
- </script>
+
+</script>
+
 </html>
