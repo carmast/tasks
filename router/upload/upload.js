@@ -2,8 +2,9 @@ const upload_router = require('express').Router();
 const multer = require('multer');
 const path = require("path");
 const fs = require('fs');
-
+const fsPromise = require("fs/promises");
 const { _generateRandomFolderName } = require('../../utils/random-generate');
+const { verifyToken } = require('../../utils/verify-token');
 
 
 const assets_storage = multer.memoryStorage();
@@ -11,7 +12,7 @@ const upload_storage = multer({
     storage: assets_storage
 }).array("files");
 
-upload_router.post("/", upload_storage, async (req, res) => {
+upload_router.post("/", upload_storage, verifyToken, async (req, res) => {
     try {
 
         const folderName = `public/assets/${_generateRandomFolderName()}`;
@@ -24,11 +25,11 @@ upload_router.post("/", upload_storage, async (req, res) => {
             const filePath = path.join(folderName, file?.originalname);
             fs.writeFile(filePath, file.buffer, (err) => {
                 if (err) throw err;
-                
+
             });
             fileDestinations.push(`${folderName}/${file?.originalname}`);
         });
-       console.log(fileDestinations)
+        console.log(fileDestinations)
         // Read existing JSON data from data.json file
         const existingData = JSON.parse(fs.readFileSync('data.json', 'utf8'));
 
@@ -49,28 +50,56 @@ upload_router.post("/", upload_storage, async (req, res) => {
     }
 })
 
+upload_router.delete("/delete", upload_storage,verifyToken, async (req, res) => {
+    try {
+        const { filename } = req.query;
+
+        try {
+            await fsPromise.access(filename, fs.constants.F_OK);
+        } catch (error) {
+            if (error.code === 'ENOENT') {
+                res.status(404).json({
+                    message: 'File not found.',
+                });
+                return;
+            }
+            throw error; // For other errors, rethrow the error
+        }
+        
+        // Read existing JSON data from data.json file
+        const existingData = JSON.parse(fs.readFileSync('data.json', 'utf8'));
+        
+        const updateFilesData =  existingData.files?.filter(url => url !== filename);
+       
+        // Update the files array in existingData with new file destinations
+        existingData.files = updateFilesData ;
+        
+        fs.writeFileSync('data.json', JSON.stringify(existingData, null, 2));
+        console.log("asdasdasds")
+        // fs.unlink(filename);
+
+        res.status(200).json("File Delete  successfully!")
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
 
 
-// upload_router.put("/add",upload_storage, async (req,res) => {
-//     try{
-//         const folderName = `../public/assets/${_generateRandomFolderName()}`;
-//         const folderPath = path.join(__dirname, '..', folderName);
-//         const files = req.files
 
-//     }catch(err){
-//          res.status(500).json(err);
-//     }
-// });
 
-// upload_router.delete("/delete",upload_storage, async (req,res) => {
-//     try{
-//         const folderName = `../public/assets/${_generateRandomFolderName()}`;
-//         const folderPath = path.join(__dirname, '..', folderName);
-//         const files = req.files
+upload_router.get("/assets" , verifyToken ,async(req,res) => {
 
-//     }catch(err){
-//          res.status(500).json(err);
-//     }
-// })
+    try{
+
+        const existingData = JSON.parse(fs.readFileSync('data.json', 'utf8'));
+         
+        res.status(200).json(existingData?.files);
+
+    }catch(err){
+     
+        res.status(500).json("Iternal Server Error");
+    
+    }
+})
 
 module.exports = upload_router;
