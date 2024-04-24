@@ -37,21 +37,22 @@ Brief description of what your project does.
 
 1. Clone the repository:
 
-   ```javascript
+```js
    git clone https://github.com/your-username/your-project.git
- \```javascript
+
 2. Install dependencies:
-```javascript
+
+```js
 yarn install
-\```javascript
-```javascript
+
 3. Set up environment variables:Create a .env file in the root directory and add the following variables:
+
+```js
 JWT_SEC=your_jwt_secret
 PASS_SEC=your_password_secret
-\```javascipt
+
 
 ## Run Project 
 
- ```js 
+```js 
    yarn dev OR yarn start  
-  \```js
