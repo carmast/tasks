@@ -12,6 +12,7 @@ upload any files with Nodejs
 
 
 2. Install dependencies:
+ Open your Terminal and run :
 ```js
  yarn install
 ```
@@ -21,7 +22,7 @@ JWT_SEC=your_jwt_secret
 PASS_SEC=your_password_secret
 ```
 ## Run Project 
-
+Open your Terminal and run :
   ```js  
    yarn dev
    ``` 
