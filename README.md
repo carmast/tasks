@@ -30,3 +30,10 @@ Open your Terminal and run :
   ```js 
    yarn start  
 ```
+
+
+## For API Endpoint (Swagger) Docs
+  
+```bash
+ http://localhost:8080/docs/
+```

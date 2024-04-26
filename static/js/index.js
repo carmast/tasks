@@ -21,7 +21,8 @@ document.addEventListener("DOMContentLoaded", function () {
             fileList.appendChild(listItem);
         });
     });
-
+        
+    
     prevUploadFiles.addEventListener("click", async function (event) {
         event.preventDefault();
         uploadFileList.innerHTML = "";
