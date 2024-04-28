@@ -1,0 +1,29 @@
+openapi: 3.1.0
+info: 
+  title: upload file
+  version: 1.0.0
+paths: 
+  /upload: 
+    post: 
+      tags: 
+        - Upload 
+      summary : Upload File Or Folder
+      requestBody: 
+         required: true
+         content: 
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/UploadInput'
+      responses:
+        '200': 
+          description: Success
+          content: 
+             application/json:  
+               schema: 
+                 type: object
+                 properties:
+                   message:
+                     type: string
+                     default: File Uploaded Successfully!
+        '500':
+          description: Server Error     

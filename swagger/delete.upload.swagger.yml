@@ -1,0 +1,52 @@
+paths: 
+  /upload/delete: 
+    delete: 
+      tags: 
+        - Upload
+      summary : Delete Upload File Or Folder
+      parameters:
+        - in: query
+          name: filename
+          required: true
+          schema:
+            type: string
+            description: The name of the file to delete
+      requestBody: 
+         required: true
+         content: 
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/DeleteUpload'
+      responses:
+        '200': 
+          description: Success
+          content: 
+             application/json:  
+               schema: 
+                 type: object
+                 properties:
+                   message:
+                     type: string
+                     default: Delete Uploaded Folder Successfully!
+        '400': 
+            description : Bad Request
+            content: 
+              application/json:  
+                schema: 
+                 type: object
+                 properties:
+                   message:
+                     type: string
+                     default: Query filename is Missing!
+        '404': 
+            description : Not Found
+            content: 
+              application/json:  
+                schema: 
+                 type: object
+                 properties:
+                   message:
+                     type: string
+                     default: File Not Found!
+        '500':
+          description: Server Error  
