@@ -1,4 +1,9 @@
 
+<<<<<<< HEAD:static/js/login.ts
+=======
+
+
+>>>>>>> 0cc6825a018ee593b6967be440e2d550eba90e6b:static/js/login.js
 async function loginRequest() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;

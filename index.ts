@@ -21,7 +21,6 @@ app.use(morgan("common"));
 app.use("/", express.static('static'));
 
 
-
 app.use('/login', login_router);
 
 
@@ -29,17 +28,17 @@ app.use('/register', register_router);
 app.use('/upload', upload_router);
 
 const options = {
-    definition: { // Corrected 'definitions' spelling
+    definition: { 
         openapi: "3.1.0",
         info: {
             title: "REST API Docs",
             version,
         },
         components: {
-            securitySchemes: { // Corrected 'securitySchemes' spelling
+            securitySchemes: { 
                 bearerAuth: {
                     type: "http",
-                    scheme: "bearer", // Corrected 'beare' to 'bearer'
+                    scheme: "bearer", 
                     bearerFormat: "JWT",
                 }
             }
@@ -50,20 +49,27 @@ const options = {
             }
         ],
     },
-    apis: ['./router/auth/login.js' , './router/upload/upload.js']
+    apis: [
+        "./swagger/login.swagger.yml",
+        "./swagger/login.schema.yml",
+        "./swagger/upload.swagger.yml",
+        "./swagger/upload.schema.yml",
+        "./swagger/delete.upload.swagger.yml",
+        "./swagger/delete.upload.schema.yml"
+    ],
 }
 
 const swaggerSpec = swaggerJSDoc(options);
 
-function swaggerDocs(app, port){
+function swaggerDocs(app, port) {
 
-     app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec))
-     app.get("docs.json", (req,res )=> {
+    app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec))
+    app.get("docs.json", (req, res) => {
         res.setHeader("Content-Type", 'application/json')
         res.send(swaggerSpec);
-     })
-    
-      console.info(`Docs available at http://localhost:${port}/docs`)
+    })
+
+    console.info(`Docs available at http://localhost:${port}/docs`)
 }
 
 

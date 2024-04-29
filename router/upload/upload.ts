@@ -29,21 +29,17 @@ upload_router.post("/", upload_storage, verifyToken, async (req, res) => {
             });
             fileDestinations.push(`${folderName}/${file?.originalname}`);
         });
-        console.log(fileDestinations)
         // Read existing JSON data from data.json file
         const existingData = JSON.parse(fs.readFileSync('data.json', 'utf8'));
 
         // Update the files array in existingData with new file destinations
         existingData.files.push(...fileDestinations);
 
-
-        console.log(existingData)
-
         fs.writeFileSync('data.json', JSON.stringify(existingData, null, 2));
 
         //  fs.writeFileSync('data.json', JSON.stringify(existingData, null, 2));
 
-        res.status(200).json("User Image File Uploaded Successfully!");
+        res.status(200).json({message: " File Uploaded Successfully!"});
 
     } catch (err) {
         res.status(500).json(err);
@@ -53,6 +49,10 @@ upload_router.post("/", upload_storage, verifyToken, async (req, res) => {
 upload_router.delete("/delete", upload_storage,verifyToken, async (req, res) => {
     try {
         const { filename } = req.query;
+
+         if(!filename) { 
+            res.status(400).json({message : "Query filename is Missing!"});
+         }
 
         try {
             await fsPromise.access(filename, fs.constants.F_OK);
@@ -75,10 +75,9 @@ upload_router.delete("/delete", upload_storage,verifyToken, async (req, res) => 
         existingData.files = updateFilesData ;
         
         fs.writeFileSync('data.json', JSON.stringify(existingData, null, 2));
-        console.log("asdasdasds")
         // fs.unlink(filename);
 
-        res.status(200).json("File Delete  successfully!")
+        res.status(200).json({message: "File Delete  successfully!"})
     } catch (err) {
         res.status(500).json(err);
     }

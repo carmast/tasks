@@ -1,0 +1,9 @@
+openapi: 3.1.0
+components:
+  schemas:
+    DeleteUpload:
+      type: object
+      properties:
+        filename:
+          type: string
+          default: file destination 

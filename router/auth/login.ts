@@ -3,6 +3,9 @@ const fs = require('fs');
 const CryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
 
+
+
+
 login_router.get("/", async (req, res) => {
 
 
@@ -17,6 +20,11 @@ login_router.get("/", async (req, res) => {
 
 });
 
+<<<<<<< HEAD:router/auth/login.ts
+=======
+
+
+>>>>>>> 0cc6825a018ee593b6967be440e2d550eba90e6b:router/auth/login.js
 
 login_router.post("/", async (req, res) => {
 
@@ -25,7 +33,7 @@ login_router.post("/", async (req, res) => {
     let user = JSON.parse(rawdata);
 
     if (req.body.username !== user?.username) {
-      res.status(401).json("Username Wrong credentials!");
+      res.status(409).json("Username Wrong credentials!");
       return;
     }
 
@@ -34,7 +42,7 @@ login_router.post("/", async (req, res) => {
     const originalPassword = hashedPassword.toString(CryptoJS.enc.Utf8);
 
     if (originalPassword !== req.body.password) {
-      res.status(401).json({ status: 401, message: 'Password Wrong credentials!' });
+      res.status(401).json({ status: 409, message: 'Password Wrong credentials!' });
       return;
     }
 
