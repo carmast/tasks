@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("common"));
 
-//all Api Router
+//all Api Routernpx 
 app.use("/", express.static('static'));
 
 

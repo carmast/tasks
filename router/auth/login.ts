@@ -17,31 +17,6 @@ login_router.get("/", async (req, res) => {
 
 });
 
-/**
- * @openapi
- * /login :
- *   post:
- *     tags:
- *       - Login 
- *     summary: Register a user 
- *     requestBody: 
- *       required: true 
- *       content: 
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - username
- *               - password
- *             properties:
- *               username:
- *                 type: string
- *                 default: test
- *               password: 
- *                 type: string
- *                 default: test
- */
-
 
 login_router.post("/", async (req, res) => {
 

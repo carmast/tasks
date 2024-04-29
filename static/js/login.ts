@@ -1,22 +1,4 @@
 
-
-// /**
-//  * @openapi
-//  * components:
-//  *  schemas:
-//  *     UserInput:
-//  *       type:object
-//  *         required:
-//  *            - username
-//  *            - password
-//  *          properties:
-//  *            username:
-//  *              type: string
-//  *               default: test
-//  *             password: 
-//  *               type: string
-//  *               default: test
-//  */
 async function loginRequest() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
