@@ -43,3 +43,12 @@ Open your Terminal and run :
 ```bash
  http://localhost:8080/docs/
 ```
+
+
+## For Prisma DB  
+
+1. if add new  model or change somthing in prisma.schema run this :
+ ```js
+  prisma generate --schema ./schema.prisma
+ ``` 
+
