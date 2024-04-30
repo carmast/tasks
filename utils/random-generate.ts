@@ -1,7 +1,7 @@
-const fs  =  require("fs");
+import  fs from "fs";
 
 //genereate random folder for assets
-  function _generateRandomFolderName  () {
+  export function _generateRandomFolderName  () {
     const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     while (true) {
         let folderName = "";
@@ -14,12 +14,10 @@ const fs  =  require("fs");
     
         try {
           // Check if the folder already exists
-           fs.access(folderPath, fs.constants.F_OK );
+           fs.access(folderPath, fs.constants.F_OK as any );
         } catch (error) {
           // Folder does not exist, return the folder name
           return folderName;
         }
       }
   };
-
-  module.exports  = {_generateRandomFolderName};

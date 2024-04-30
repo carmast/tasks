@@ -1,17 +1,21 @@
 
-const jwt = require('jsonwebtoken');
+import  jwt, { JwtPayload } from 'jsonwebtoken';
+import {NextFunction, Request , Response } from 'express';
 
-const verifyToken = (req, res, next) => {
-  const authHeader = req.headers.token;
+interface CustomRequest extends Request {
+  user?: JwtPayload;
+}
+export const verifyToken = (req: CustomRequest, res: Response, next: NextFunction) => {
+  const authHeader = req.headers.token as string;;
   if (authHeader) {
-    const token = authHeader.split(" ")[1];
+    const token = authHeader?.split(" ")[1];
     try {
-      jwt.verify(token, process.env.JWT_SEC , (err, user) => {
+      jwt.verify(token, process.env.JWT_SEC as string , (err, user) => {
         if (err) {
           res.status(403).json("Token is not valid!");
           return;
         } else {
-          req.user  = user;
+          req.user  = user as JwtPayload;
           next();
         }
       });
@@ -24,5 +28,3 @@ const verifyToken = (req, res, next) => {
   }
 };
 
-
-module.exports = {verifyToken};

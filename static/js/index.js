@@ -5,7 +5,7 @@ if (!userParse?.accessToken) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    const fileInput = document.getElementById("fileInput");
+    const fileInput  = document.getElementById("fileInput");
     const fileList = document.getElementById("fileList");
     const previewButton = document.getElementById("previewButton");
     const uploadForm = document.getElementById("uploadForm");

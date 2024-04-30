@@ -1,15 +1,15 @@
-const express = require("express");
-const app = express();
-const cors = require('cors');
-const morgan = require('morgan');
-const { version } = require("./package.json");
-require('dotenv').config();
+import  express,{Request, Response,Express} from "express";
+import  cors from 'cors';
+import  morgan from 'morgan';
+import  { version } from "./package.json";
+import dotenv from 'dotenv';
+dotenv.config();
+const app = express(); 
 
-const login_router = require("./router/auth/login");
-const upload_router = require('./router/upload/upload');
-const register_router = require("./router/auth/register");
-const swaggerJSDoc = require("swagger-jsdoc");
-const swaggerUi = require("swagger-ui-express");
+import  login_router from "./router/auth/login";
+import  upload_router from './router/upload/upload';
+import swaggerJSDoc from "swagger-jsdoc";
+import  swaggerUi  from "swagger-ui-express";
 
 
 app.use(cors());
@@ -17,16 +17,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("common"));
 
-//all Api Routernpx 
+//all Api Router 
 app.use("/", express.static('static'));
-
-
 app.use('/login', login_router);
-
-
-app.use('/register', register_router);
 app.use('/upload', upload_router);
-
+//swagger router and enpoint options 
 const options = {
     definition: { 
         openapi: "3.1.0",
@@ -61,10 +56,10 @@ const options = {
 
 const swaggerSpec = swaggerJSDoc(options);
 
-function swaggerDocs(app, port) {
+function swaggerDocs(app:Express, port: number) {
 
     app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec))
-    app.get("docs.json", (req, res) => {
+    app.get("docs.json", (_: Request, res : Response) => {
         res.setHeader("Content-Type", 'application/json')
         res.send(swaggerSpec);
     })
