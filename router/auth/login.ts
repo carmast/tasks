@@ -1,11 +1,11 @@
 import  express from "express";
-import { _getstaticpage, _postforlogin } from "../../controller/auth.controller";
+import {authController} from "../../controller/auth.controller";
 
 const login_router = express.Router();
 
-//controllers in  router 
-login_router.get("/" , _getstaticpage);
-login_router.post("/", _postforlogin);
+//auth controllers in  router 
+login_router.get("/" , authController.get_static_page);
+login_router.post("/", authController.post_login_request);
 
 export default login_router;
 

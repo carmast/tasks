@@ -9,7 +9,7 @@ components:
       properties:
         username:
           type: string
-          default: test
+          default: zudskyy
         password:
           type: string
-          default: test
+          default: 1234

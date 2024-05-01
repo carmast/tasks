@@ -4,6 +4,9 @@ components:
     UploadInput:
       type: object
       properties:
+        id:
+          type: string
+          default: user id
         files:
           type: array
           items:

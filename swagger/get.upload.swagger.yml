@@ -1,0 +1,32 @@
+openapi: 3.1.0
+info: 
+  title: upload file
+  version: 1.0.0
+paths: 
+  /upload/assets: 
+    get: 
+      tags: 
+        - Upload
+      summary : Get File Or Folder
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: id
+          required: true
+          description: b57151a9-b83d-4fb5-9aad-547458acde10
+          schema:
+            type: string
+            description: ID for Search Query  
+      responses:
+        '200': 
+          description: Success
+          content: 
+             application/json:  
+               schema: 
+                 type: object
+                 properties:
+                  files:
+                     type: array
+        '500':
+          description: Server Error     

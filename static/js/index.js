@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
         event.preventDefault();
         uploadFileList.innerHTML = "";
 
-        const fileResult = await fetch("/upload/assets", { method: "GET", headers: { "token": `Bearer ${userParse?.accessToken}` } });
+        const fileResult = await fetch(`/upload/assets?id=${userParse?.id}`, { method: "GET", headers: { "token": `Bearer ${userParse?.accessToken}` } });
         const fileResultJson = await fileResult.json();
 
         Array.from(fileResultJson).forEach(file => {
@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const deleteButton = document.createElement("button");
             deleteButton.textContent = "❌";
             deleteButton.addEventListener("click", async function () {
-                const deleteResult = await fetch("/upload/delete?filename=" + file, {
+                const deleteResult = await fetch(`/upload/delete?id=${userParse?.id}&filename=` + file, {
                     method: "DELETE",
                     headers: {
                         "token": `Bearer ${userParse?.accessToken}`,
@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
             formData.append('files', file);
         });
         console.log(userParse?.accessToken)
-        fetch('/upload', {
+        fetch(`/upload?id=${userParse?.id}`, {
             method: 'POST',
             body: formData,
             headers: {

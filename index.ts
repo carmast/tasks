@@ -10,7 +10,6 @@ import  login_router from "./router/auth/login";
 import  upload_router from './router/upload/upload';
 import swaggerJSDoc from "swagger-jsdoc";
 import  swaggerUi  from "swagger-ui-express";
-import { prisma } from "./prisma";
 
 
 app.use(cors());
@@ -25,14 +24,7 @@ app.use('/upload', upload_router);
 
 
 
-prisma.$connect()
-  .then(() => {
-    console.log('Connected to the database');
-    // Your code here
-  })
-  .catch((error) => {
-    console.error('Error connecting to the database:', error);
-  });
+
 
 //swagger router and enpoint options 
 const options = {
@@ -63,7 +55,9 @@ const options = {
         "./swagger/upload.swagger.yml",
         "./swagger/upload.schema.yml",
         "./swagger/delete.upload.swagger.yml",
-        "./swagger/delete.upload.schema.yml"
+        "./swagger/delete.upload.schema.yml",
+        "./swagger/get.upload.swagger.yml",
+
     ],
 }
 

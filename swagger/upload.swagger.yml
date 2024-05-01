@@ -8,6 +8,14 @@ paths:
       tags: 
         - Upload 
       summary : Upload File Or Folder
+      parameters:
+        - in: query
+          name: id
+          required: true
+          description: example b1232-43545-23b4344
+          schema:
+            type: string
+            description: ID for Search Query
       requestBody: 
          required: true
          content: 

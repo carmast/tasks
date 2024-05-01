@@ -8,6 +8,11 @@ paths:
         - in: query
           name: filename
           required: true
+          description: public/access/Id334/1234.jpeg 
+        - in: query
+          name: id
+          required: true
+          description: example b1232-43545-23b4344
           schema:
             type: string
             description: The name of the file to delete

@@ -30,6 +30,12 @@ paths:
                     type: string
                   files:
                     type: array
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
                   accessToken:
                     type: string
         '409':

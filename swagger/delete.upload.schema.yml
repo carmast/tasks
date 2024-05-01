@@ -7,3 +7,6 @@ components:
         filename:
           type: string
           default: file destination 
+        id:
+          type: string
+          default: user id
