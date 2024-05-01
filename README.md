@@ -44,11 +44,23 @@ Open your Terminal and run :
  http://localhost:8080/docs/
 ```
 
-
 ## For Prisma DB  
-
-1. if add new  model or change somthing in prisma.schema run this :
+1. add prisma with yarn on global 
  ```js
-  prisma generate --schema ./schema.prisma
+ yarn global add prisma 
+ ```
+2. 
+1.if add new  model or change somthing in prisma.schema run this :
+ ```js
+ prisma generate 
  ``` 
+2. after push models on db  
+```js
+  prisma push db 
+```
 
+## For prisma Migration 
+
+```js
+prisma migrate dev  --name  YourNameMigrate
+```
